@@ -1,0 +1,1 @@
+from https://github.com/godotengine/godot/issues/37220
