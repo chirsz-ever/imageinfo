@@ -72,6 +72,16 @@ def print_IHDR_info(data: bytes):
         print(f"  Filter Method: {filter_method}")
         print(f"  Interlace Method: {interlace_method}")
 
+def print_zTXt_info(data: bytes):
+    offset_nul = data.find(b'\0')
+    keywords = data[:offset_nul].decode('latin-1')
+    compression_method = data[offset_nul+1]
+    assert compression_method == 0, compression_method
+    compression_text = data[offset_nul+2:]
+    text = zlib.decompress(compression_text).decode()
+    print(f"    Keywords: {keywords}")
+    print(f"    Content: {text}")
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("file", help="PNG file to read")
@@ -96,6 +106,8 @@ def main():
         elif chunk.type == b"gAMA":
             gamma, = struct.unpack(">I", chunk.data)
             print(f"  Gamma: {gamma} ({gamma/100000})")
+        elif chunk.type == b'zTXt':
+            print_zTXt_info(chunk.data)
 
 if __name__ == "__main__":
     main()
