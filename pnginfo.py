@@ -83,8 +83,8 @@ def print_zTXt_info(data: bytes):
         content = text_bytes.decode()
     else:
         content = f"({len(text_bytes)} bytes)"
-    print(f"    Keywords: {keywords}")
-    print(f"    Content: {content}")
+    print(f"  Keywords: {keywords}")
+    print(f"  Content: {content}")
 
 def main():
     parser = argparse.ArgumentParser()
