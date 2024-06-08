@@ -78,9 +78,13 @@ def print_zTXt_info(data: bytes):
     compression_method = data[offset_nul+1]
     assert compression_method == 0, compression_method
     compression_text = data[offset_nul+2:]
-    text = zlib.decompress(compression_text).decode()
+    text_bytes = zlib.decompress(compression_text)
+    if len(text_bytes) < 40:
+        content = text_bytes.decode()
+    else:
+        content = f"({len(text_bytes)} bytes)"
     print(f"    Keywords: {keywords}")
-    print(f"    Content: {text}")
+    print(f"    Content: {content}")
 
 def main():
     parser = argparse.ArgumentParser()
