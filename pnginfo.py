@@ -103,6 +103,7 @@ def main():
             print(f'{chunk.type}, offset={chunk.offset}')
         else:
             print(f'{chunk.type}, offset={chunk.offset}, CRC32 check failed')
+            continue
         if chunk.type == b"iCCP":
             print_iCCP_info(chunk.data, args.save_icc, args.file)
         elif chunk.type == b"IHDR":
